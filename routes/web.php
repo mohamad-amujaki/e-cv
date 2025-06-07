@@ -7,4 +7,4 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/test', [CvController::class, 'show'])->name('cv.show');
+Route::get('/cv', [CvController::class, 'show'])->name('cv.show');
