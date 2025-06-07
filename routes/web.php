@@ -8,3 +8,5 @@ Route::get('/', function () {
 });
 
 Route::get('/cv', [CvController::class, 'show'])->name('cv.show');
+
+Route::get('/cv-load', [CvController::class,'loadData'])->name('cv.loadData');
