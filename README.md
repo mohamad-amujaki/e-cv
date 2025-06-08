@@ -23,28 +23,33 @@ Ikuti langkah-langkah di bawah ini untuk menyiapkan dan menjalankan aplikasi ini
 
 2. Langkah-langkah Setup
 - Kloning Repositori:
-git clone https://github.com/mohamad-amujaki/e-cv.git # Ganti dengan URL repositori Anda
-- cd e-cv
+```
+git clone https://github.com/mohamad-amujaki/e-cv.git 
+cd e-cv
+```
   
-3. Instal Dependensi Composer:
-- composer install
+1. Instal Dependensi Composer:
+``` composer install ```
 
-4. Instal Dependensi Node.js & Kompilasi Aset Frontend:
-- npm install
-- npm run dev # Untuk pengembangan
+2. Instal Dependensi Node.js & Kompilasi Aset Frontend:
+``` npm install ```
+``` npm run dev # Untuk pengembangan ```
 atau
-- npm run build # Untuk produksi/final
+``` npm run build # Untuk produksi/final ```
 
-5. Konfigurasi File .env:
+3. Konfigurasi File .env:
 Salin file .env.example ke .env:
-cp .env.example .env
+```cp .env.example .env ```
 
-6. Pastikan variabel lingkungan dasar dikonfigurasi, terutama APP_KEY.
+4. Pastikan variabel lingkungan dasar dikonfigurasi, terutama APP_KEY.
 Hasilkan Kunci Aplikasi:
-php artisan key:generate
+``` php artisan key:generate ```
 
-7. Siapkan Data CV:
-Aplikasi ini memuat data CV dari file JSON. Buat file bernama data.json di direktori storage/app/public/. Contoh struktur kontennya:
+5. Siapkan Data CV:
+- Aplikasi ini memuat data CV dari file JSON.
+- Buat file bernama data.json di direktori storage/app/public/. 
+- Contoh struktur kontennya:
+```
 {
     "personal": {
         "name": "Nama Anda",
@@ -66,12 +71,14 @@ Aplikasi ini memuat data CV dari file JSON. Buat file bernama data.json di direk
     "skills": {},
     "projects": []
 }
+```
 
-Anda dapat mengisi data ini sesuai CV Anda.
-Jalankan Server Pengembangan Laravel:
+- Anda dapat mengisi data ini sesuai CV Anda.
+
+- Jalankan Server Pengembangan Laravel:
 php artisan serve
 
-Aplikasi akan tersedia di http://127.0.0.1:8000/e-cv.
+- Aplikasi akan tersedia di http://127.0.0.1:8000/e-cv.
 
 ### Penggunaan
 1. Mengakses CV: Buka browser Anda dan navigasikan ke http://127.0.0.1:8000/cv.
@@ -83,21 +90,21 @@ Untuk memperbarui konten CV:
 1. Buka file storage/app/public/data.json.
 2. Edit konten JSON sesuai dengan informasi CV terbaru Anda.
 3. Karena aplikasi menggunakan caching, setelah mengedit file, Anda mungkin perlu membersihkan cache agar perubahan terlihat:
-php artisan cache:clear
+``` php artisan cache:clear ```
 
 Kemudian refresh halaman CV di browser Anda.
 
 ## Pengujian
 Aplikasi ini dilengkapi dengan feature test dasar untuk memastikan fungsionalitas inti bekerja dengan benar.
 Untuk menjalankan semua test:
-php artisan test
+``` php artisan test ```
 
 
 Untuk menjalankan test spesifik (misalnya, hanya test halaman CV):
-php artisan test tests/Feature/CvPageTest.php
+``` php artisan test tests/Feature/CvPageTest.php ```
 
 
 ## Deployment
 Untuk instruksi langkah demi langkah mengenai cara menerapkan aplikasi ini ke lingkungan produksi, silakan merujuk ke Panduan Deployment.
-Terima kasih telah menggunakan aplikasi ini!
 
+Terima kasih telah menggunakan aplikasi ini!
