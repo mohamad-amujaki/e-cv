@@ -1,61 +1,103 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+## Aplikasi CV Dinamis dengan Laravel
+Aplikasi ini adalah contoh proyek Laravel sederhana yang dirancang untuk menampilkan Curriculum Vitae (CV) secara dinamis. Data CV dimuat dari file JSON, dirender menggunakan Blade dan Tailwind CSS, serta memiliki fitur unduh PDF dan pratinjau PDF.
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+## Tumpukan Teknologi (Tech Stack)
+- Backend: PHP, Laravel
+- Frontend: Blade Templating Engine, Tailwind CSS
+- Database: Tidak menggunakan database (data dari file JSON)
 
-## About Laravel
+## Fitur Tambahan:
+- Caching data CV menggunakan Laravel Cache (file driver).
+- Generate PDF dari Blade View menggunakan barryvdh/laravel-dompdf.
+- Unit dan Feature Testing menggunakan PHPUnit.
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## Pengembangan Lokal
+Ikuti langkah-langkah di bawah ini untuk menyiapkan dan menjalankan aplikasi ini di lingkungan pengembangan lokal Anda.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+### Prasyarat
+1. Pastikan Anda memiliki hal-hal berikut terinstal di mesin Anda:
+- PHP (8.1 atau lebih baru direkomendasikan)
+- Composer
+- Node.js & npm (untuk mengompilasi aset Tailwind CSS)
+- Git
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+2. Langkah-langkah Setup
+- Kloning Repositori:
+git clone https://github.com/mohamad-amujaki/e-cv.git # Ganti dengan URL repositori Anda
+- cd e-cv
+  
+3. Instal Dependensi Composer:
+- composer install
 
-## Learning Laravel
+4. Instal Dependensi Node.js & Kompilasi Aset Frontend:
+- npm install
+- npm run dev # Untuk pengembangan
+atau
+- npm run build # Untuk produksi/final
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+5. Konfigurasi File .env:
+Salin file .env.example ke .env:
+cp .env.example .env
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+6. Pastikan variabel lingkungan dasar dikonfigurasi, terutama APP_KEY.
+Hasilkan Kunci Aplikasi:
+php artisan key:generate
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+7. Siapkan Data CV:
+Aplikasi ini memuat data CV dari file JSON. Buat file bernama data.json di direktori storage/app/public/. Contoh struktur kontennya:
+{
+    "personal": {
+        "name": "Nama Anda",
+        "title": "Judul Profesional Anda",
+        "email": "email@example.com",
+        "phone": "+62 81234567890",
+        "location": "Kota, Negara",
+        "summary": "Ringkasan singkat tentang diri Anda."
+    },
+    "social_links": [
+        {
+            "platform": "LinkedIn",
+            "url": "https://linkedin.com/in/namaanda",
+            "icon_class": "fab fa-linkedin-in"
+        }
+    ],
+    "experience": [],
+    "education": [],
+    "skills": {},
+    "projects": []
+}
 
-## Laravel Sponsors
+Anda dapat mengisi data ini sesuai CV Anda.
+Jalankan Server Pengembangan Laravel:
+php artisan serve
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+Aplikasi akan tersedia di http://127.0.0.1:8000/e-cv.
 
-### Premium Partners
+### Penggunaan
+1. Mengakses CV: Buka browser Anda dan navigasikan ke http://127.0.0.1:8000/cv.
+2. Mengunduh PDF: Di halaman CV, klik tombol "Download CV (PDF)".
+3. Pratinjau PDF: Navigasikan ke http://127.0.0.1:8000/cv/download untuk melihat pratinjau PDF langsung di browser.
 
-- **[Vehikl](https://vehikl.com)**
-- **[Tighten Co.](https://tighten.co)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Redberry](https://redberry.international/laravel-development)**
-- **[Active Logic](https://activelogic.com)**
+### Cara Memperbarui Konten CV
+Untuk memperbarui konten CV:
+1. Buka file storage/app/public/data.json.
+2. Edit konten JSON sesuai dengan informasi CV terbaru Anda.
+3. Karena aplikasi menggunakan caching, setelah mengedit file, Anda mungkin perlu membersihkan cache agar perubahan terlihat:
+php artisan cache:clear
 
-## Contributing
+Kemudian refresh halaman CV di browser Anda.
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+## Pengujian
+Aplikasi ini dilengkapi dengan feature test dasar untuk memastikan fungsionalitas inti bekerja dengan benar.
+Untuk menjalankan semua test:
+php artisan test
 
-## Code of Conduct
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+Untuk menjalankan test spesifik (misalnya, hanya test halaman CV):
+php artisan test tests/Feature/CvPageTest.php
 
-## Security Vulnerabilities
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+## Deployment
+Untuk instruksi langkah demi langkah mengenai cara menerapkan aplikasi ini ke lingkungan produksi, silakan merujuk ke Panduan Deployment.
+Terima kasih telah menggunakan aplikasi ini!
 
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
