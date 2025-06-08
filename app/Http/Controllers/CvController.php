@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Barryvdh\DomPDF\Facade\Pdf;
 use Illuminate\Support\Facades\File;
 use Illuminate\Contracts\Cache\Store;
 use Illuminate\Support\Facades\Cache;
@@ -53,5 +54,39 @@ class CvController extends Controller
         });
 
         return view("cv-load", compact("data"));
+    }
+
+    public function loadDataJson()
+    {
+        $jsonFile = "cv_data.json";
+
+        if (!Storage::disk("public")->exists($jsonFile)) {
+            abort(404, "File JSON tidak ditemukan.");
+        }
+
+        $jsonContent = Storage::disk("public")->get($jsonFile);
+
+            // Decode JSON
+        $data = json_decode($jsonContent, true);
+
+        return view("cv-load-json", compact("data"));
+    }
+
+    public function previewCvPdf()
+    {
+        $jsonFile = "cv_data.json";
+
+        if (!Storage::disk("public")->exists($jsonFile)) {
+            abort(404, "File JSON tidak ditemukan.");
+        }
+
+        $jsonContent = Storage::disk("public")->get($jsonFile);
+        // Decode JSON
+        $data = json_decode($jsonContent, true);
+
+        // Muat view Blade Anda dengan data
+        $pdf = Pdf::loadView('cv-load-json', compact('data'));
+
+        return $pdf->stream('CV_Mohamad_Arif_Mujaki.pdf');
     }
 }
