@@ -19,6 +19,7 @@
             <header class="text-center mb-10">
                 <h1 class="text-4xl lg:text-5xl font-bold text-gray-900 mb-1">{{ $data['personal']['name'] }}</h1>
                 <h2 class="text-xl lg:text-2xl font-medium text-blue-600 mt-1">{{ $data['personal']['title'] }}</h2>
+
                 <div class="flex flex-wrap justify-center gap-x-6 gap-y-3 mt-5 text-gray-600">
                     @isset($data['personal']['email'])
                         <div class="flex items-center gap-2">
@@ -54,6 +55,14 @@
                 @endforeach
             </div>
         @endisset
+
+        <div class="text-center mb-6">
+            <a href="{{ route('cv.download') }}"
+               class="inline-flex items-center px-6 py-3 border border-transparent text-base font-medium rounded-md shadow-sm text-white bg-blue-600 hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-blue-500 transition ease-in-out duration-150" target="_blank">
+                <i class="fas fa-file-pdf mr-2"></i>
+                Download CV (PDF)
+            </a>
+        </div>
 
         {{-- Bagian Ringkasan --}}
         @isset($data['personal']['summary'])
