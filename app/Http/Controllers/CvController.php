@@ -2,14 +2,16 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Contracts\Cache\Store;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\File;
+use Illuminate\Contracts\Cache\Store;
+use Illuminate\Support\Facades\Cache;
 use Illuminate\Support\Facades\Storage;
 
 class CvController extends Controller
 {
-    public function show ()
+
+    public function show()
     {
         $name = "Mohamad Arif Mujaki";
         $email = "mohamad.amujaki@gmail.com";
@@ -20,20 +22,36 @@ class CvController extends Controller
         return view("cv", compact("name", "email", "occupation", "interests", "location"));
     }
 
-    public function loadData ()
+    public function loadData()
     {
-        $jsonFile = "data.json";
+        $jsonFile = "cv_data.json";
+        $cacheKey = "cv_data_from_json"; // Kunci unik untuk data cache ini
+        $cacheDuration = 60 * 60;
 
-        if (!Storage::disk("public")->exists($jsonFile))
-        {
-            abort(404, "File Json tidak ditemukan");
-        }
+        // Gunakan Cache::remember()
+        $data = Cache::remember($cacheKey, $cacheDuration, function () use ($jsonFile) {
+            // Logika ini hanya akan dijalankan jika data tidak ada di cache
 
-        $jsonContent = Storage::disk("public")->get($jsonFile);
+            // Periksa apakah file JSON ada di disk "public" (storage/app/public)
+            if (!Storage::disk("public")->exists($jsonFile)) {
+                abort(404, "File JSON tidak ditemukan.");
+            }
 
-        $data = json_decode($jsonContent, true);
+            // Ambil konten JSON
+            $jsonContent = Storage::disk("public")->get($jsonFile);
+
+            // Decode JSON
+            $decodedData = json_decode($jsonContent, true);
+
+            // Periksa apakah decoding berhasil dan hasilnya adalah array
+            if (json_last_error() !== JSON_ERROR_NONE || !is_array($decodedData)) {
+                // Log error atau tangani sesuai kebutuhan Anda
+                abort(500, "Gagal mengurai data dari file JSON.");
+            }
+
+            return $decodedData; // Kembalikan data yang akan di-cache
+        });
 
         return view("cv-load", compact("data"));
-
     }
 }
