@@ -21,7 +21,7 @@ class CvController extends Controller
             // Periksa apakah file JSON ada di disk "public" (storage/app/public)
             if (!Storage::disk("public")->exists($this->jsonFile)) {
                 // Jika tidak ada, hentikan eksekusi dengan error 404
-                abort(404, "File Json tidak ditemukan");
+                abort(404, "File JSON tidak ditemukan.");
             }
 
             // Ambil konten JSON
